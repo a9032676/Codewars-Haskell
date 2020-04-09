@@ -1,0 +1,63 @@
+library:
+  source-dirs: src
+  exposed-modules:
+  - AdditionAssoc
+  - AdditionCommutes_Induction
+  - AdditionCommutes
+  - AlgebraicIsomorphism
+  - Church
+  - Combinators
+  - Coroutine
+  - Counting
+  - DNE_Equivalent_PEM
+  - Fixit
+  - FoldingThroughAFixedPoint
+  - Foldmap
+  - Isomorphism
+  - Monads
+  - OddsAndEvens
+  - Peano_Church
+  - PolyvariadicFunctions
+  - RegExpParser_PCV
+  - RegExpParser
+  - ScottEncoding
+  - SimpleSQLEngine
+  - Singletons
+  - TimesComm
+  - TreeByLevels
+  - YonedaLemma
+tests:
+  Codewars-Haskell-test:
+    source-dirs: test
+    main: Spec.hs
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hspec
+    - Codewars-Haskell
+copyright: 2019 9032676
+maintainer: 9032676@gmail.com
+dependencies:
+- parsec
+- base >= 4.7 && < 5
+name: Codewars-Haskell
+version: 0.1.0.0
+extra-source-files:
+- README.md
+- ChangeLog.md
+author: '9032676'
+github: https://github.com/a9032676/Codewars-Haskell
+license: MIT
+executables:
+  Codewars-Haskell-exe:
+    source-dirs: app
+    main: Main.hs
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - Codewars-Haskell
+description: Personal Codewars kata solutions
