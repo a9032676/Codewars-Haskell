@@ -24,48 +24,48 @@ sqlEngine database = execute where
 
   execQuery :: Query -> Table
   execQuery (Query colIds name joins cond) =
-    maybe [] (
-      -- filterKeys (colId2Name <$> colIds) .
-      maybe id whereF cond .
-      joinAll joins .
-      table2ResultNames
-    ) $ tableOf name
+    maybe [] (selectT (colId2Name <$> colIds) . maybe id whereF cond . joinAll joins) $ tableOf name
     where
-      tableOf = flip lookup database
-      lookupV  = lookup . colId2Name
+      tableOf n = toFullName n <$> lookup n database
+      lookupR  = lookup . colId2Name
 
       col2Name n c = concat [n, ".", c]
       colId2Name (ColId n c) = col2Name n c
       cols2Name n = mapKeyR $ col2Name n
-      table2ResultNames = mapKeyT $ col2Name name
+      toFullName n = mapKeyT $ col2Name n
 
+      selectT sels t = [ selectR sels cols | cols <- t]
+      selectR sels row = foldl (\ res x -> res ++ [col | col <- row, fst col == x]) [] sels
+      
       whereF (Cond op (ValConst c) (ValConst c')) = filterC $ const $ op c c'
       whereF (Cond op (ValConst c) (ValId col))   = whereF' col $ op c
       whereF (Cond op (ValId col)  (ValConst c))  = whereF' col $ flip op c
+      whereF (Cond op (ValId col)  (ValId col'))  =
+        fmap $ \row ->
+          maybe [] (\s ->
+            maybe [] (\s' ->
+              if op s s' then row else []) (lookupR col' row)) $ lookupR col row
       whereF' colId p = filterR $ \(k, v) -> k == colId2Name colId && p v
-      
+
       joinAll :: [Join] -> Table -> Table
       joinAll [] t = t
-      joinAll (Join jName (Cond (==) (ValId lcol@(ColId lt lc)) (ValId rcol@(ColId rt rc))) : xs) table = joinAll xs joinT
+      joinAll (Join join (Cond op lv@(ValId lcol) rv@(ValId rcol)) : xs) table = joinAll xs $ findT [] table
         where
-          joinT | lt == jName && rt == name = [ cols ++ child  cols | cols <- table ]  -- lt is a join table, rt is a current table
-                | lt == name && rt == jName = [ cols ++ parent cols | cols <- joinT']  -- rt is a join table, lt is a current table
-                | otherwise                 = [ cols ++ child  cols | cols <- table ]  -- lt is a join table, rt is a current table
-          joinT' = maybe [] (fmap $ cols2Name jName) $ tableOf jName
-
-          child cols =
-            maybe [] (cols2Name lt . head . filterR (\(k, v) -> k == lc && maybe False (v ==) (lookupV rcol cols))) $ tableOf lt
-          parent cols =
-            head . filterR (\(k, v) -> k == colId2Name lcol && maybe False (v ==) (lookupV rcol cols)) $ table
+          findT :: Table -> Table -> Table
+          findT = foldl
+              (\ t r ->
+                 t ++
+                   maybe (maybe []
+                   (findR lv r) $ lookupR rcol r)
+                   (findR rv r)  (lookupR lcol r))
+          findR :: Value -> Columns -> String -> Table
+          findR valId row con = fmap (row ++) $ maybe [] (whereF (Cond op (ValConst con) valId)) $ tableOf join
 
 filterR :: (Column -> Bool) -> Table -> Table
 filterR f t = [ cols | cols <- t, col <- cols, f col]
 
 filterC :: (Column -> Bool) -> Table -> Table
 filterC f t = [ [col | col <- cols, f col] | cols <- t]
-
-filterKeys :: [String] -> Table -> Table
-filterKeys x = filterC $ (`elem` x) . fst
 
 mapKeyR :: (String -> String) -> Columns -> Columns
 mapKeyR f cols = [ (f k, v) | (k, v) <- cols ]
@@ -125,37 +125,3 @@ trimManyP p = manySpaceP *> p <* manySpaceP
 skipP :: String -> Parser ()
 skipP ""     = return ()
 skipP (x:xs) = (char (toLower x) <|> char (toUpper x)) *> skipP xs
-
-
-
-
-
-db = [ ( "movie"  , [ [ ( "id", "1" ), ( "name", "Avatar"   ), ( "directorID", "1" ) ]
-                    , [ ( "id", "2" ), ( "name", "Titanic"  ), ( "directorID", "1" ) ]
-                    , [ ( "id", "3" ), ( "name", "Infamous" ), ( "directorID", "2" ) ]
-                    , [ ( "id", "4" ), ( "name", "Skyfall"  ), ( "directorID", "3" ) ]
-                    , [ ( "id", "5" ), ( "name", "Aliens"   ), ( "directorID", "1" ) ]
-                    ]
-                  )
-                , ( "actor"
-                  , [ [ ( "id", "1" ), ( "name", "Leonardo DiCaprio" ) ]
-                    , [ ( "id", "2" ), ( "name", "Sigourney Weaver"  ) ]
-                    , [ ( "id", "3" ), ( "name", "Daniel Craig"      ) ]
-                    ]
-                  )
-                , ( "director"
-                  , [ [ ( "id", "1" ), ( "name", "James Cameron"   ) ]
-                    , [ ( "id", "2" ), ( "name", "Douglas McGrath" ) ]
-                    , [ ( "id", "3" ), ( "name", "Sam Mendes"      ) ]
-                    ]
-                  )
-                , ( "actor_to_movie"
-                  , [ [ ( "movieID", "1" ), ( "actorID", "2" ) ]
-                    , [ ( "movieID", "2" ), ( "actorID", "1" ) ]
-                    , [ ( "movieID", "3" ), ( "actorID", "2" ) ]
-                    , [ ( "movieID", "3" ), ( "actorID", "3" ) ]
-                    , [ ( "movieID", "4" ), ( "actorID", "3" ) ]
-                    , [ ( "movieID", "5" ), ( "actorID", "2" ) ]
-                    ]
-                  )
-                ]
