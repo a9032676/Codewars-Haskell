@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: da204751a632d20396b317f2a8418c69585dc1da5ede54522519eaac278d207d
+-- hash: 39191da9610936fea4e5cb8c6b970ec1039602b5994c3fc7801c6b09e023e2ba
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -59,6 +59,7 @@ library
       IPv4
       JpnTranslit
       TimesComm_Definitions
+      TypeTranspiler
       YonedaLemmaPreloaded
       Paths_Codewars_Haskell
   hs-source-dirs:
