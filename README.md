@@ -5,5 +5,5 @@ All the personal solutions in [Codewars]("https://www.codewars.com/"), mostly th
 
 Please feel free to refer this after you already completed specific kata. DO NOT PLAGIARISM THIS DIRECTLY, you won't learn anything!
 
-## Links
-- [My profile]("https://www.codewars.com/users/a9032676") on Codewars
+## Profile
+https://www.codewars.com/users/a9032676
