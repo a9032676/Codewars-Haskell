@@ -40,8 +40,10 @@ tests:
 copyright: 2019 9032676
 maintainer: 9032676@gmail.com
 dependencies:
+- template-haskell
 - base >= 4.7 && < 5
 - parsec
+- template-haskell
 name: Codewars-Haskell
 version: 0.1.0.0
 extra-source-files:
