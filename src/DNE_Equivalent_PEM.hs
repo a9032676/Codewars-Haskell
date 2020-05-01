@@ -4,6 +4,7 @@ module DNE_Equivalent_PEM where
 
 import Prelude
 import Data.Void
+import Control.Monad.Fix
 
 -- Principle of Excluded Middle
 type AxiomPEM = forall a. forall b. (a -> b) -> ((a -> Void) -> b) -> b
@@ -39,10 +40,9 @@ type AxiomDNE = forall a. ((a -> Void) -> Void) -> a
 
 
 -- (((b -> Void) -> Void) -> b) -> (a -> b) -> ((a -> Void) -> b) -> b
--- λ
-
 from :: AxiomDNE -> AxiomPEM
-from dne f g = g (dne $ \h -> undefined)
+from dne f g = g $ \a -> undefined
 
+-- (forall a. forall b. (a -> b) -> ((a -> Void) -> b) -> b) -> forall a. ((a -> Void) -> Void) -> a
 to :: AxiomPEM -> AxiomDNE
-to pem f = undefined
+to pem = absurd $ pem id fix

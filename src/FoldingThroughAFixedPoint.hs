@@ -23,6 +23,7 @@ wrap f = Least (\k -> k (fold k <$> f))
 
 -- They each are closely tied to the notions of folding and unfolding
 -- as well
+
 fold :: (f r -> r) -> (Least f -> r)
 fold k (Least g) = g k
 
@@ -32,7 +33,7 @@ unfold = Greatest
 -- It is the case that any "strictly positive" 
 -- type in Haskell is representable using Least.
 
--- We first need the data type's "signature functor".
+-- We first need the data tyundefinedpe's "signature functor".
 -- For instance, here is one for []
 data ListF a x = Nil | Cons a x deriving Functor
 
@@ -63,8 +64,35 @@ greatestList (Greatest u s) = case u s of
 -- directly from least to greatest fixed points and visa versa. Can
 -- you write the functions which witness this last isomorphism
 -- generally for any functor?
-greatestLeast :: Functor f => Greatest f -> Least f
-greatestLeast = error "todo"
 
+-- r := Already fold elements
+-- s := unfold elements
+
+-- Look as anamorphism:
+--              f
+--       s ----------> Least f
+--       |                ^
+-- Coalg |                | wrap
+--       v                |
+--      f s -------> f (Least f)
+--            fmap m
+
+-- (forall s . (s -> f s) s) -> (forall r . (f r -> r) -> r)
+greatestLeast :: Functor f => Greatest f -> Least f
+greatestLeast (Greatest coalg s) = wrap . fmap (greatestLeast . Greatest coalg) . coalg $ s
+
+-- Look as catamorphism:
+--                    fmap m
+--   f (Greatest f) --------> f r
+--         |                   |
+--     ??? |                   | alg
+--         v                   v
+--    Greatest f <------------ r
+--                  
+
+-- (forall r . (f r -> r) -> r) -> (forall s . (s -> f s) s)
+
+-- (s -> f s)
+-- ((f r -> r) -> r) -> f (f r -> r) -> r)
 leastGreatest :: Functor f => Least f -> Greatest f
-leastGreatest = error "todo"
+leastGreatest (Least l) = l . Greatest . fmap $ unwrap
