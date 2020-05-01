@@ -79,7 +79,8 @@ greatestList (Greatest u s) = case u s of
 
 -- (forall s . (s -> f s) s) -> (forall r . (f r -> r) -> r)
 greatestLeast :: Functor f => Greatest f -> Least f
-greatestLeast (Greatest coalg s) = wrap . fmap (greatestLeast . Greatest coalg) . coalg $ s
+-- greatestLeast (Greatest coalg s) = wrap . fmap (greatestLeast . Greatest coalg) . coalg $ s
+greatestLeast = wrap . fmap greatestLeast . unwrap
 
 -- Look as catamorphism:
 --                    fmap m
