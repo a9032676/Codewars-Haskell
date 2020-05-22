@@ -40,6 +40,8 @@ tests:
 copyright: 2019 9032676
 maintainer: 9032676@gmail.com
 dependencies:
+- lens
+- mtl
 - template-haskell
 - base >= 4.7 && < 5
 - parsec

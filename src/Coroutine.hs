@@ -5,7 +5,6 @@ module Coroutine where
 import Control.Monad (ap, forever)
 
 -- Preloaded contains the following:
---
 
 -- r :: The final result type
 -- u :: In parameter type

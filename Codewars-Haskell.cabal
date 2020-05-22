@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1c77a02cf537f839802a49ee75889a84f5fb4ffc25915a09f91e62f281f9da4f
+-- hash: 716d87a7d9e13a017db616bfcef116aa6a0e95a1c4193cbda0bafb2f6a6f189a
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -56,6 +56,7 @@ library
       AdditionCommutes_Definitions
       ApplicativeParser
       CountingPreloaded
+      Imperative
       IPv4
       JpnTranslit
       MicroLens
@@ -69,6 +70,8 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , lens
+    , mtl
     , parsec
     , template-haskell
   default-language: Haskell2010
@@ -83,6 +86,8 @@ executable Codewars-Haskell-exe
   build-depends:
       Codewars-Haskell
     , base >=4.7 && <5
+    , lens
+    , mtl
     , parsec
     , template-haskell
   default-language: Haskell2010
@@ -99,6 +104,8 @@ test-suite Codewars-Haskell-test
       Codewars-Haskell
     , base >=4.7 && <5
     , hspec
+    , lens
+    , mtl
     , parsec
     , template-haskell
   default-language: Haskell2010

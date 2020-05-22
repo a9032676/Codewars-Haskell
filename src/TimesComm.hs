@@ -58,5 +58,5 @@ zeroComm  NumZ    = EqlZ
 zeroComm (NumS a) = zeroComm a
 
 timesComm :: Natural a -> Natural b -> Equal (a :*: b) (b :*: a)
-timesComm a NumZ = symmetric $ zeroComm a
-timesComm a b    = undefined
+timesComm a  NumZ    = symmetric $ zeroComm a
+timesComm a (NumS b) = undefined
