@@ -60,7 +60,7 @@ infixl 4 <@>
 
 -- | Parse a whole string.
 stringP :: String -> Parser String
-stringP x = P $ \s -> maybe [] (\s' -> [(s', x)]) $ stripPrefix x s
+stringP x = P $ maybe [] (\s' -> [(s', x)]) . stripPrefix x
 
 -- | Construct a parser that never parses anything.
 emptyP :: Parser a

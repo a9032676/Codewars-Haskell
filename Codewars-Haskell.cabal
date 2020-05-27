@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 716d87a7d9e13a017db616bfcef116aa6a0e95a1c4193cbda0bafb2f6a6f189a
+-- hash: c376675ab1f98b0910bf9e616e6eb71b25f47eca3af5bad833956fd13eb0588b
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -62,6 +62,7 @@ library
       MicroLens
       Tagless
       TimesComm_Definitions
+      TinyThreePassCompiler
       TupleMaker
       TypeTranspiler
       YonedaLemmaPreloaded
