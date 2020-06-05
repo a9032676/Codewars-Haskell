@@ -1,4 +1,4 @@
-module OneLineTask where
+module OneLineTask_100_Times where
 -- module X where
 
 {-
