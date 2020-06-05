@@ -1,4 +1,5 @@
 module OneLineTask where
+-- module X where
 
 {-
 
@@ -17,7 +18,6 @@ f x = const x <$> [0..99]
 f x = x <$ [0..99]
 
 f = (>>) [0..99] . pure
-
 
 f = flip (<$) [0..99]
 

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 0a04a98afc8ab97be47d87f1d426cc67769537900b9de1cc23a3aad46e27588b
+-- hash: 6c8680b6af2d8df123c2e69a2f8401facc3343165d2022363dff51bf1cdf2322
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -56,6 +56,7 @@ library
       AdditionCommutes_Definitions
       ApplicativeParser
       CountingPreloaded
+      DuplicateEncoder
       Imperative
       IPv4
       JpnTranslit
