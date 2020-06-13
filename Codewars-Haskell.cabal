@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 76ab5ef0cb5563ca2c2e7db97f1cc68021afc69ebcbeb020730315e7da15e9f8
+-- hash: d35bab32993b0eda4df4141ca8eab3283d48044e2d31435c6260a804f5a9f3e7
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -56,6 +56,7 @@ library
       AdditionCommutes_Definitions
       ApplicativeParser
       CanYouGetTheLoop
+      Church_Bool
       CountingPreloaded
       DuplicateEncoder
       FunctionEvaluator
@@ -67,6 +68,7 @@ library
       OneLineTask_Fix
       ShortestList
       SplitStrings
+      Stream
       Tagless
       TimesComm_Definitions
       TinyThreePassCompiler
