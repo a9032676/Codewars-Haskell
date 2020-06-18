@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1dcd9895b26ab962e9578a505c9a0a802774de72c260a12dbd6408e83e24b0e4
+-- hash: efbd1a256fa68ef63e96b47e55ee9e43bed3613ff3bcde42da51c474be84b669
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -63,6 +63,7 @@ library
       Imperative
       IPv4
       JpnTranslit
+      JSON_Parser
       MicroLens
       OneLineTask_100_Times
       OneLineTask_Fix
