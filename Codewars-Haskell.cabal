@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: efbd1a256fa68ef63e96b47e55ee9e43bed3613ff3bcde42da51c474be84b669
+-- hash: efc2306605c2ee59e155c6ab09a9c16914b37e51bdae88c7167e9b08a46f9ea2
 
 name:           Codewars-Haskell
 version:        0.1.0.0
@@ -57,6 +57,7 @@ library
       ApplicativeParser
       CanYouGetTheLoop
       Church_Bool
+      Church_PredAndSub
       CountingPreloaded
       DuplicateEncoder
       FunctionEvaluator
